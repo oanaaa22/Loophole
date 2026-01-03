@@ -1,273 +1,399 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="theme-color" content="#06070a" />
   <title>Loop Hole Finance</title>
-  <meta name="description" content="Loop Hole Finance — regulatory intelligence & crypto risk awareness, presented with Solana-grade clarity." />
+  <meta name="description" content="Loophole Finance — regulation interpreter & crypto risk awareness. Informational only." />
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <!-- Clean, premium default font -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-
+  <!-- Keep your existing file names -->
   <link rel="stylesheet" href="styles.css" />
+
+  <!-- Quick mobile + layout fixes (overrides styles.css if needed) -->
+  <style>
+    :root{
+      --bg:#06070a;
+      --panel: rgba(255,255,255,0.05);
+      --border: rgba(255,255,255,0.12);
+      --text:#eaf0ff;
+      --muted: rgba(234,240,255,0.72);
+      --shadow: 0 18px 60px rgba(0,0,0,.55);
+      --grad: linear-gradient(90deg,#00ffa3,#03e1ff,#dc1fff);
+    }
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(0,255,163,.10), transparent 55%),
+                  radial-gradient(1200px 700px at 80% 0%, rgba(220,31,255,.10), transparent 55%),
+                  radial-gradient(900px 600px at 70% 85%, rgba(3,225,255,.08), transparent 55%),
+                  var(--bg);
+      color:var(--text);
+      overflow-x:hidden;
+    }
+    a{color:inherit; text-decoration:none}
+    .wrap{width:min(1120px, 92vw); margin:0 auto}
+    .muted{color:var(--muted)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px; border:1px solid var(--border);
+      border-radius:999px; background: rgba(0,0,0,.28);
+      backdrop-filter: blur(10px);
+      font-size:12px; color:var(--muted);
+    }
+    .pill b{color:var(--text); font-weight:700}
+
+    /* Header */
+    .header{
+      position:sticky; top:0; z-index:50;
+      background: rgba(6,7,10,.55);
+      border-bottom:1px solid rgba(255,255,255,.08);
+      backdrop-filter: blur(14px);
+    }
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px; min-width: 220px;
+    }
+    .brand img{
+      width:42px; height:42px; border-radius:12px;
+      box-shadow: 0 10px 30px rgba(0,0,0,.45);
+      object-fit:cover;
+    }
+    .brand .t1{font-weight:800; letter-spacing:.3px}
+    .brand .t2{font-size:12px; color:var(--muted); margin-top:2px}
+    .navlinks{
+      display:flex; align-items:center; gap:16px;
+      color:rgba(234,240,255,.78);
+      font-size:13px;
+    }
+    .navlinks a{padding:8px 10px; border-radius:10px}
+    .navlinks a:hover{background:rgba(255,255,255,.06)}
+    .navright{display:flex; align-items:center; gap:10px}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      height:40px; padding:0 14px; border-radius:12px;
+      border:1px solid rgba(255,255,255,.14);
+      background:rgba(0,0,0,.2);
+      color:var(--text); cursor:pointer;
+      font-weight:700; font-size:13px;
+    }
+    .btn:hover{background:rgba(255,255,255,.06)}
+    .btnPrimary{
+      border:0;
+      background: var(--grad);
+      color:#041015;
+      box-shadow: 0 14px 50px rgba(0,255,163,.10);
+    }
+    .btnPrimary:hover{filter: brightness(1.02)}
+    .hamburger{display:none}
+
+    /* Hero */
+    .hero{padding:44px 0 18px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.1fr .9fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    .card{
+      background: var(--panel);
+      border:1px solid var(--border);
+      border-radius:22px;
+      box-shadow: var(--shadow);
+      overflow:hidden;
+      position:relative;
+    }
+    .cardInner{padding:22px}
+    .h1{
+      font-size: clamp(30px, 4vw, 48px);
+      line-height:1.05;
+      margin:12px 0 10px;
+      letter-spacing:-.5px;
+    }
+    .h1 .accent{
+      background: var(--grad);
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      font-weight:900;
+    }
+    .lead{font-size:15px; color:var(--muted); line-height:1.55; margin:0 0 16px}
+    .heroActions{display:flex; gap:10px; flex-wrap:wrap}
+    .chips{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px}
+    .chip{
+      padding:10px 12px;
+      border-radius:14px;
+      background: rgba(0,0,0,.28);
+      border:1px solid rgba(255,255,255,.10);
+      min-width: 140px;
+    }
+    .chip .k{font-size:11px; color:rgba(234,240,255,.65)}
+    .chip .v{font-size:13px; font-weight:800; margin-top:2px}
+
+    /* Right visual panel */
+    .visual{
+      display:flex; flex-direction:column; gap:12px;
+      padding:14px;
+    }
+    .visualImg{
+      width:100%;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      overflow:hidden;
+      background: rgba(0,0,0,.25);
+    }
+    .visualImg img{width:100%; height:auto; display:block}
+    .miniCard{
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      padding:12px 12px;
+      color:rgba(234,240,255,.82);
+      font-size:13px;
+      line-height:1.45;
+    }
+    .miniCard b{color:var(--text)}
+    .quote{
+      margin-top:8px;
+      padding:14px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.22);
+      color:rgba(234,240,255,.85);
+      font-size:13px;
+    }
+
+    /* Sections */
+    .section{padding:22px 0}
+    .sectionTitle{font-size:18px; letter-spacing:-.2px; margin:0 0 10px}
+    .sectionSub{margin:0 0 14px; color:var(--muted); line-height:1.55}
+    .grid3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:14px;
+    }
+    .feature{
+      padding:16px;
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.20);
+    }
+    .feature h3{margin:0 0 6px; font-size:14px}
+    .feature p{margin:0; color:rgba(234,240,255,.74); font-size:13px; line-height:1.5}
+
+    /* Interpreter */
+    .interp{
+      border-radius:22px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(0,0,0,.22);
+      overflow:hidden;
+    }
+    .interpTop{
+      padding:16px;
+      display:flex;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:12px;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .interpTop .left p{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.5}
+    .interpBody{padding:16px}
+    label{display:block; font-size:12px; color:rgba(234,240,255,.72); margin:10px 0 6px}
+    textarea,input,select{
+      width:100%;
+      color:var(--text);
+      background: rgba(0,0,0,.34);
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:14px;
+      padding:12px 12px;
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:170px; resize:vertical; line-height:1.45}
+    .row2{display:grid; grid-template-columns: 1fr 220px; gap:12px; margin-top:10px}
+    .actions2{display:flex; gap:10px; align-items:center; flex-wrap:wrap; margin-top:12px}
+    .status{font-size:12px; color:rgba(234,240,255,.72)}
+    .output{
+      margin-top:14px;
+      padding:14px;
+      border-radius:16px;
+      background: rgba(0,0,0,.35);
+      border:1px solid rgba(255,255,255,.10);
+    }
+    .output h3{margin:10px 0 6px; font-size:13px; letter-spacing:.2px}
+    .output p,.output li{color:rgba(234,240,255,.86); line-height:1.5; font-size:13px}
+    .output ul{margin:8px 0 0 18px}
+    .fineprint{margin-top:10px; font-size:12px; color:rgba(234,240,255,.60)}
+
+    /* FAQ */
+    details{
+      border-radius:16px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(0,0,0,.18);
+      padding:12px 12px;
+    }
+    details + details{margin-top:10px}
+    summary{cursor:pointer; font-weight:800; color:rgba(234,240,255,.90)}
+    .faqBody{margin-top:8px; color:rgba(234,240,255,.72); font-size:13px; line-height:1.55}
+
+    /* Footer */
+    .footer{
+      padding:26px 0 32px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:rgba(234,240,255,.70);
+      font-size:12px;
+    }
+    .footerRow{display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap}
+
+    /* Mobile */
+    @media (max-width: 920px){
+      .heroGrid{grid-template-columns: 1fr; }
+      .brand{min-width:auto}
+    }
+    @media (max-width: 760px){
+      .navlinks{display:none}
+      .hamburger{display:inline-flex}
+      .row2{grid-template-columns: 1fr}
+      .grid3{grid-template-columns: 1fr}
+      .cardInner{padding:18px}
+      .hero{padding:26px 0 12px}
+      .btn{height:42px}
+    }
+
+    /* Mobile menu sheet */
+    .sheet{
+      position:fixed; inset:0; z-index:60;
+      display:none;
+      background: rgba(0,0,0,.55);
+      backdrop-filter: blur(10px);
+    }
+    .sheet.open{display:block}
+    .sheetPanel{
+      position:absolute; right:12px; top:64px;
+      width:min(320px, 92vw);
+      border-radius:18px;
+      border:1px solid rgba(255,255,255,.12);
+      background: rgba(10,12,16,.92);
+      box-shadow: var(--shadow);
+      padding:12px;
+    }
+    .sheetPanel a{
+      display:block; padding:10px 10px;
+      border-radius:12px;
+      color:rgba(234,240,255,.86);
+    }
+    .sheetPanel a:hover{background: rgba(255,255,255,.06)}
+  </style>
 </head>
 
 <body>
-  <!-- Background ambience -->
-  <div class="bg" aria-hidden="true">
-    <div class="bg-orb orb-a"></div>
-    <div class="bg-orb orb-b"></div>
-    <div class="bg-orb orb-c"></div>
-    <div class="bg-grid"></div>
-    <div class="bg-grain"></div>
-  </div>
+  <header class="header">
+    <div class="wrap">
+      <div class="nav">
+        <a class="brand" href="#top" aria-label="Loop Hole Finance">
+          <!-- Use your logo image here -->
+          <img src="IMG_8563.PNG" alt="Loop Hole Finance logo" />
+          <div>
+            <div class="t1">Loop Hole Finance</div>
+            <div class="t2">Interpretation • Risk awareness</div>
+          </div>
+        </a>
 
-  <!-- Top bar -->
-  <header class="topbar">
-    <div class="wrap topbar-inner">
-      <a class="brand" href="#top" aria-label="Loop Hole Finance">
-        <img class="brand-logo" src="IMG_8563.PNG" alt="Loop Hole Finance logo" />
-        <div class="brand-text">
-          <div class="brand-name">LOOP HOLE FINANCE</div>
-          <div class="brand-sub">Solana • Interpretation • Risk Awareness</div>
+        <nav class="navlinks" aria-label="Primary">
+          <a href="#about">About</a>
+          <a href="#interpreter">Interpreter</a>
+          <a href="#how">How it works</a>
+          <a href="#faq">FAQ</a>
+        </nav>
+
+        <div class="navright">
+          <button class="btn" id="copyQuoteBtn" type="button">Copy Quote</button>
+          <a class="btn btnPrimary" href="#interpreter">Open Interpreter</a>
+          <button class="btn hamburger" id="menuBtn" type="button" aria-label="Open menu">Menu</button>
         </div>
-      </a>
-
-      <nav class="nav" aria-label="Primary">
-        <a class="navlink" href="#about">About</a>
-        <a class="navlink" href="#interpreter">Interpreter</a>
-        <a class="navlink" href="#how">How it works</a>
-        <a class="navlink" href="#faq">FAQ</a>
-      </nav>
-
-      <div class="actions">
-        <button class="btn ghost" id="copyQuoteBtn" type="button">Copy Quote</button>
-        <a class="btn primary" href="#interpreter">Open Interpreter</a>
-        <button class="hamburger" id="hamburger" aria-label="Open menu" type="button">
-          <span></span><span></span><span></span>
-        </button>
-      </div>
-    </div>
-
-    <div class="mobile" id="mobileMenu">
-      <a href="#about">About</a>
-      <a href="#interpreter">Interpreter</a>
-      <a href="#how">How it works</a>
-      <a href="#faq">FAQ</a>
-      <div class="mobile-actions">
-        <button class="btn ghost" id="copyQuoteBtnMobile" type="button">Copy Quote</button>
-        <a class="btn primary" href="#interpreter">Open Interpreter</a>
       </div>
     </div>
   </header>
 
+  <!-- Mobile menu -->
+  <div class="sheet" id="sheet" aria-hidden="true">
+    <div class="sheetPanel">
+      <a href="#about" class="sheetLink">About</a>
+      <a href="#interpreter" class="sheetLink">Interpreter</a>
+      <a href="#how" class="sheetLink">How it works</a>
+      <a href="#faq" class="sheetLink">FAQ</a>
+    </div>
+  </div>
+
   <main id="top">
-    <!-- HERO -->
     <section class="hero">
-      <div class="wrap hero-grid">
-        <div class="hero-left">
-          <div class="pill">
-            <span class="pill-dot"></span>
-            <span><b>Informational tooling</b> — clarity on rules, not advice.</span>
-          </div>
-
-          <h1 class="h1">
-            Make regulations readable.<br />
-            <span class="grad">Turn complexity into structure.</span>
-          </h1>
-
-          <p class="lead">
-            Loop Hole Finance is a professional, Solana-native brand focused on
-            <b>regulatory intelligence</b> and <b>crypto risk awareness</b>.
-            We translate dense guidance into consistent sections:
-            what it says, what it doesn’t say, what’s unclear, and what to watch.
-          </p>
-
-          <div class="hero-cta">
-            <a class="btn primary" href="#interpreter">Try the Interpreter</a>
-            <a class="btn" href="#about">Learn what LOOP is</a>
-          </div>
-
-          <div class="stats">
-            <div class="stat">
-              <div class="stat-k">Ticker</div>
-              <div class="stat-v mono">$LOOP</div>
-            </div>
-            <div class="stat">
-              <div class="stat-k">Network</div>
-              <div class="stat-v">Solana</div>
-            </div>
-            <div class="stat">
-              <div class="stat-k">Tone</div>
-              <div class="stat-v">Professional</div>
-            </div>
-          </div>
-
-          <div class="quote">
-            <div class="quote-mark">“</div>
-            <div class="quote-text">
-              Every regulation creates its own escape velocity.
-              <div class="quote-sub">— Loop Hole Finance</div>
-            </div>
-          </div>
-
-          <p class="disclaimer">
-            <b>Disclaimer:</b> This website provides informational content. Nothing here is legal, tax, or financial advice.
-          </p>
-        </div>
-
-        <div class="hero-right">
-          <div class="hero-media">
-            <img src="IMG_8564.PNG" alt="Loop Hole Finance visual" />
-          </div>
-
-          <div class="hero-cards">
-            <div class="mini-card">
-              <div class="mini-k">What LOOP does</div>
-              <div class="mini-v">Explains rules with structure and clarity.</div>
-            </div>
-            <div class="mini-card">
-              <div class="mini-k">What LOOP doesn’t do</div>
-              <div class="mini-v">No “how to avoid” guidance. No promises. No advice.</div>
-            </div>
-            <div class="mini-card">
-              <div class="mini-k">Why it exists</div>
-              <div class="mini-v">Markets move faster than rulebooks. Understanding wins.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ABOUT -->
-    <section id="about" class="section">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>What is Loop Hole Finance?</h2>
-            <p>
-              “Loophole” here is not about evasion. It’s about <b>interpretation</b>:
-              rules create boundaries, and boundaries create behavior. LOOP is built to
-              map that behavior responsibly — with clear language and careful claims.
-            </p>
-          </div>
-          <span class="chip">Black-first • Solana gradient accents</span>
-        </div>
-
-        <div class="grid3">
+        <div class="heroGrid">
           <div class="card">
-            <div class="card-k">Interpretation</div>
-            <h3>Structure beats confusion</h3>
-            <p>
-              Dense documents become readable outputs: scope, obligations, definitions,
-              ambiguity zones, and practical watchpoints.
-            </p>
-          </div>
+            <div class="cardInner">
+              <span class="pill">Informational <b>only</b> • Not legal/tax/financial advice</span>
 
-          <div class="card">
-            <div class="card-k">Risk awareness</div>
-            <h3>Signals, not recommendations</h3>
-            <p>
-              LOOP is designed to present facts and uncertainty. If you add compliance tooling later,
-              outputs stay factual and auditable.
-            </p>
-          </div>
+              <h1 class="h1">
+                Make regulations readable. <br />
+                Turn complexity into <span class="accent">structure</span>.
+              </h1>
 
-          <div class="card">
-            <div class="card-k">$LOOP utility</div>
-            <h3>Access tiers that make sense</h3>
-            <p>
-              Token-gated limits, premium briefs, templates, and watchlists.
-              No “yield” language. Keep it clean and credible.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
+              <p class="lead">
+                Loop Hole Finance is a Solana-native brand focused on regulation interpretation and crypto risk awareness.
+                We translate dense rules into clear sections: what it says, what it doesn’t say, what’s unclear, and what to watch.
+              </p>
 
-    <!-- INTERPRETER -->
-    <section id="interpreter" class="section">
-      <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>Regulation Interpreter</h2>
-            <p>
-              Paste a rule, guidance excerpt, or ask a question. Choose a mode. Get a structured, readable output.
-              Runs locally (no API). Later you can connect it to ChatGPT safely via backend.
-            </p>
-          </div>
-
-          <div class="head-actions">
-            <button class="btn small" id="exampleBtn" type="button">Load Example</button>
-            <button class="btn small ghost" id="clearBtn" type="button">Clear</button>
-          </div>
-        </div>
-
-        <div class="interpreter">
-          <!-- Left: input -->
-          <div class="panel">
-            <div class="panel-head">
-              <div>
-                <div class="panel-title">Input</div>
-                <div class="panel-sub">Paste text or write a question</div>
-              </div>
-              <div class="panel-right">
-                <span class="badge" id="charCount">0 chars</span>
-              </div>
-            </div>
-
-            <textarea
-              id="inputText"
-              class="textarea"
-              placeholder="Example: Summarize what this requires, what is unclear, and what people commonly misread. Keep it informational only.
-
-Paste regulation text here…"></textarea>
-
-            <div class="panel-foot">
-              <div class="modes" role="tablist" aria-label="Modes">
-                <button class="mode active" data-mode="neutral" type="button">Neutral</button>
-                <button class="mode" data-mode="simple" type="button">Simple</button>
-                <button class="mode" data-mode="trader" type="button">Trader</button>
-                <button class="mode" data-mode="risks" type="button">Risks</button>
+              <div class="heroActions">
+                <a class="btn btnPrimary" href="#interpreter">Try the Interpreter</a>
+                <a class="btn" href="#how">Learn how it works</a>
               </div>
 
-              <button class="btn primary" id="generateBtn" type="button">Generate</button>
-            </div>
-
-            <div class="helper">
-              Tip: This UI is built for credibility. Keep answers structured, cautious, and source-first when you go live.
-            </div>
-          </div>
-
-          <!-- Right: output -->
-          <div class="panel panel-output">
-            <div class="panel-head">
-              <div>
-                <div class="panel-title">Output</div>
-                <div class="panel-sub">Structured summary (informational)</div>
-              </div>
-              <div class="panel-right">
-                <button class="btn small ghost" id="copyOutputBtn" type="button">Copy</button>
-                <button class="btn small" id="downloadBtn" type="button">Download .txt</button>
-              </div>
-            </div>
-
-            <div id="outputBox" class="output">
-              <div class="empty">
-                <div class="spark"></div>
-                <div>
-                  <div class="empty-title">Ready.</div>
-                  <div class="empty-sub">Paste text on the left and click <b>Generate</b>.</div>
+              <div class="chips">
+                <div class="chip">
+                  <div class="k">Ticker</div>
+                  <div class="v">$LOOP</div>
+                </div>
+                <div class="chip">
+                  <div class="k">Network</div>
+                  <div class="v">Solana</div>
+                </div>
+                <div class="chip">
+                  <div class="k">Tone</div>
+                  <div class="v">Professional</div>
                 </div>
               </div>
-            </div>
 
-            <div class="notice">
-              <div class="notice-title">Bounded claims</div>
-              <div class="notice-text">
-                LOOP provides informational summaries. It does not provide legal/tax/financial advice and does not instruct on evasion or wrongdoing.
+              <div class="quote" id="quoteBox">
+                “Every regulation creates its own escape velocity.”
+              </div>
+
+              <div class="fineprint">
+                Disclaimer: This site provides general educational information. If you need advice, consult a qualified professional.
+              </div>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="visual">
+              <!-- Banner / hero art -->
+              <div class="visualImg">
+                <img src="IMG_8564.PNG" alt="Loop Hole Finance banner" />
+              </div>
+
+              <div class="miniCard">
+                <b>What LOOP does:</b> Explains rules with structure and clarity.
+              </div>
+              <div class="miniCard">
+                <b>What LOOP doesn’t do:</b> No “how to evade” guidance. No promises. No advice.
+              </div>
+              <div class="miniCard">
+                <b>Why it exists:</b> Markets move faster than rulebooks. Understanding wins.
               </div>
             </div>
           </div>
@@ -275,102 +401,243 @@ Paste regulation text here…"></textarea>
       </div>
     </section>
 
-    <!-- HOW -->
-    <section id="how" class="section">
+    <section id="about" class="section">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>How it works</h2>
-            <p>
-              LOOP’s output is designed to be consistent and readable. The interpreter organizes text into sections
-              that are useful to real users.
-            </p>
-          </div>
-        </div>
+        <h2 class="sectionTitle">About Loop Hole Finance</h2>
+        <p class="sectionSub">
+          We’re building a simple, readable layer over regulation: summaries, key points, risk flags, and questions you should ask before acting.
+          The product is designed for education and decision hygiene — not loophole abuse.
+        </p>
 
-        <div class="grid2">
-          <div class="card">
-            <h3>1) Extract key obligations</h3>
-            <p>
-              Detects “must / required / prohibited” patterns, bullets, and important lines.
-              Produces a concise list of obligations and scope.
-            </p>
+        <div class="grid3">
+          <div class="feature">
+            <h3>Clarity-first</h3>
+            <p>Break long texts into a structured summary, key points, and “what’s unclear.”</p>
           </div>
-          <div class="card">
-            <h3>2) Identify ambiguity zones</h3>
-            <p>
-              Flags soft language like “may”, “reasonable”, “subject to”, “material”.
-              This is where interpretation differs across firms and jurisdictions.
-            </p>
+          <div class="feature">
+            <h3>Risk notes</h3>
+            <p>Highlight compliance and operational risks in plain English.</p>
           </div>
-          <div class="card">
-            <h3>3) Format into a trusted structure</h3>
-            <p>
-              Outputs consistent headings: what it says, what it doesn’t say, unclear parts, and watchpoints.
-              Built to reduce misreads.
-            </p>
-          </div>
-          <div class="card">
-            <h3>4) Ready for upgrade</h3>
-            <p>
-              When you want real AI answers + citations, wire the Generate button to a backend endpoint
-              that calls ChatGPT safely (no exposing your API key).
-            </p>
+          <div class="feature">
+            <h3>Better questions</h3>
+            <p>Get prompts that help you verify assumptions with a professional.</p>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- FAQ -->
-    <section id="faq" class="section">
+    <!-- Interpreter -->
+    <section id="interpreter" class="section">
       <div class="wrap">
-        <div class="section-head">
-          <div>
-            <h2>FAQ</h2>
-            <p>Short, defensible answers that keep the brand professional.</p>
+        <div class="interp">
+          <div class="interpTop">
+            <div class="left">
+              <h2 class="sectionTitle" style="margin:0">Regulation Interpreter</h2>
+              <p>
+                Paste an excerpt or describe a situation. You’ll get a structured, educational explanation (informational only).
+              </p>
+            </div>
+            <div class="right">
+              <span class="pill">Safe mode • Refuses illegal requests</span>
+            </div>
+          </div>
+
+          <div class="interpBody">
+            <label for="interpInput">Your text</label>
+            <textarea id="interpInput" placeholder="Paste regulation text, policy wording, or a scenario…"></textarea>
+
+            <div class="row2">
+              <div>
+                <label for="jurisdiction">Jurisdiction (optional)</label>
+                <input id="jurisdiction" placeholder="UK / EU / US / …" />
+              </div>
+              <div>
+                <label for="tone">Tone</label>
+                <select id="tone">
+                  <option value="professional" selected>Professional</option>
+                  <option value="plain">Plain English</option>
+                  <option value="bullet">Bulleted</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="actions2">
+              <button class="btn btnPrimary" id="interpBtn" type="button">Interpret</button>
+              <button class="btn" id="interpClear" type="button">Clear</button>
+              <span class="status" id="interpStatus"></span>
+            </div>
+
+            <div class="output" id="interpOutput" aria-live="polite" style="display:none"></div>
+
+            <div class="fineprint">
+              Not legal/tax/financial advice. For decisions, consult a qualified professional.
+            </div>
           </div>
         </div>
+      </div>
+    </section>
 
-        <div class="faq">
-          <details open>
-            <summary>Is LOOP providing advice?</summary>
-            <div class="faq-body">
-              No. LOOP is informational. It helps users understand documents and ambiguity — not make decisions.
-            </div>
-          </details>
+    <section id="how" class="section">
+      <div class="wrap">
+        <h2 class="sectionTitle">How it works</h2>
+        <p class="sectionSub">
+          The interpreter returns a structured response:
+          summary → key points → risks → questions to clarify. If a user asks for illegal instructions (e.g., evasion), it refuses and redirects to lawful options.
+        </p>
 
-          <details>
-            <summary>What does “loophole” mean in this context?</summary>
-            <div class="faq-body">
-              It’s commentary on complexity: rules can be ambiguous and interpretation changes. LOOP focuses on clarity and risk awareness.
-            </div>
-          </details>
-
-          <details>
-            <summary>How do I make the interpreter “real AI”?</summary>
-            <div class="faq-body">
-              You connect the Generate button to your backend (serverless is fine) that calls ChatGPT and returns answers with citations.
-            </div>
-          </details>
+        <div class="grid3">
+          <div class="feature">
+            <h3>1) Paste text</h3>
+            <p>Drop in the excerpt or describe a scenario with context.</p>
+          </div>
+          <div class="feature">
+            <h3>2) Interpret</h3>
+            <p>The model analyzes it and returns a structured, readable output.</p>
+          </div>
+          <div class="feature">
+            <h3>3) Verify</h3>
+            <p>Use the “questions to clarify” with a professional before acting.</p>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <section id="faq" class="section">
+      <div class="wrap">
+        <h2 class="sectionTitle">FAQ</h2>
+
+        <details>
+          <summary>Is this legal/tax/financial advice?</summary>
+          <div class="faqBody">No. It’s educational commentary designed to improve understanding and risk awareness.</div>
+        </details>
+
+        <details>
+          <summary>Can it tell me how to avoid taxes or break rules?</summary>
+          <div class="faqBody">No. Requests for illegal activity are refused. The tool can explain compliance concepts and lawful options at a high level.</div>
+        </details>
+
+        <details>
+          <summary>Why does my output look “structured”?</summary>
+          <div class="faqBody">Because the interpreter always returns: summary, key points, risks, and questions to clarify.</div>
+        </details>
       </div>
     </section>
 
     <footer class="footer">
-      <div class="wrap footer-inner">
-        <div>
-          <div class="footer-brand">LOOP HOLE FINANCE</div>
-          <div class="footer-sub">Interpretation matters.</div>
-        </div>
-        <div class="footer-right">
-          <div class="footer-small">© <span id="year"></span> • Informational only • Not advice</div>
+      <div class="wrap">
+        <div class="footerRow">
+          <div>© <span id="year"></span> Loop Hole Finance</div>
+          <div class="muted">Informational only • Not advice</div>
         </div>
       </div>
     </footer>
   </main>
 
-  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    // Small UI helpers (mobile menu + copy quote)
+    const yearEl = document.getElementById("year");
+    if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  <script src="script.js"></script>
+    const sheet = document.getElementById("sheet");
+    const menuBtn = document.getElementById("menuBtn");
+    const closeSheet = () => { sheet.classList.remove("open"); sheet.setAttribute("aria-hidden","true"); };
+    const openSheet  = () => { sheet.classList.add("open"); sheet.setAttribute("aria-hidden","false"); };
+
+    menuBtn?.addEventListener("click", () => {
+      sheet.classList.contains("open") ? closeSheet() : openSheet();
+    });
+    sheet?.addEventListener("click", (e) => {
+      if (e.target === sheet) closeSheet();
+    });
+    document.querySelectorAll(".sheetLink").forEach(a => a.addEventListener("click", closeSheet));
+
+    const copyQuoteBtn = document.getElementById("copyQuoteBtn");
+    const quoteBox = document.getElementById("quoteBox");
+    copyQuoteBtn?.addEventListener("click", async () => {
+      const t = quoteBox?.textContent?.trim() || "";
+      try{ await navigator.clipboard.writeText(t); copyQuoteBtn.textContent = "Copied"; }
+      catch{ copyQuoteBtn.textContent = "Copy failed"; }
+      setTimeout(()=> copyQuoteBtn.textContent = "Copy Quote", 900);
+    });
+
+    // Interpreter UI -> calls /api/interpret (you will add this endpoint)
+    const interpBtn = document.getElementById("interpBtn");
+    const interpClear = document.getElementById("interpClear");
+    const interpInput = document.getElementById("interpInput");
+    const jurisdiction = document.getElementById("jurisdiction");
+    const tone = document.getElementById("tone");
+    const interpOutput = document.getElementById("interpOutput");
+    const interpStatus = document.getElementById("interpStatus");
+
+    const escapeHtml = (str) => (str || "").replace(/[&<>"']/g, (m) => ({
+      "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+    }[m]));
+
+    const list = (arr) => `<ul>${(arr||[]).map(x=>`<li>${escapeHtml(x)}</li>`).join("")}</ul>`;
+
+    function renderResult(data){
+      interpOutput.style.display = "block";
+      interpOutput.innerHTML = `
+        <h3>Plain-English summary</h3>
+        <p>${escapeHtml(data.summary || "")}</p>
+
+        <h3>Key points</h3>
+        ${list(data.key_points)}
+
+        <h3>Risk / compliance notes</h3>
+        ${list(data.risks)}
+
+        <h3>Questions to clarify</h3>
+        ${list(data.questions)}
+
+        <p class="fineprint" style="margin-top:10px">${escapeHtml(data.disclaimer || "")}</p>
+      `;
+    }
+
+    async function runInterpreter(){
+      const text = interpInput.value.trim();
+      if(!text){
+        interpOutput.style.display = "block";
+        interpOutput.innerHTML = `<p>Please paste some text first.</p>`;
+        return;
+      }
+
+      interpBtn.disabled = true;
+      interpStatus.textContent = "Working…";
+      interpOutput.style.display = "none";
+      interpOutput.innerHTML = "";
+
+      try{
+        const res = await fetch("/api/interpret", {
+          method: "POST",
+          headers: {"Content-Type":"application/json"},
+          body: JSON.stringify({
+            text,
+            jurisdiction: jurisdiction.value.trim(),
+            tone: tone.value
+          })
+        });
+        const payload = await res.json();
+        if(!res.ok) throw new Error(payload?.error || "Request failed");
+
+        renderResult(payload);
+        interpStatus.textContent = "Done.";
+      }catch(err){
+        interpOutput.style.display = "block";
+        interpOutput.innerHTML = `<p>Interpreter error: ${escapeHtml(err.message || String(err))}</p>`;
+        interpStatus.textContent = "Error";
+      }finally{
+        interpBtn.disabled = false;
+        setTimeout(()=> interpStatus.textContent = "", 1400);
+      }
+    }
+
+    interpBtn?.addEventListener("click", runInterpreter);
+    interpClear?.addEventListener("click", () => {
+      interpInput.value = "";
+      interpOutput.style.display = "none";
+      interpOutput.innerHTML = "";
+    });
+  </script>
 </body>
 </html>
